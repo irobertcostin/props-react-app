@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,93 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.header {
+  /* border:2px solid red; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  height: 150px;
+}
+
+body{
+  background-color: black;
+  height: 100vh;
+}
+
+#root {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(42, 42, 103, 1) 100%, rgba(0, 212, 255, 1) 100%);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.header-a {
+  /* border: 2px solid red; */
+}
+
+.header-b {
+  /* border: 2px solid green; */
+}
+
+.header-c {
+  /* border: 2px solid magenta; */
+
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+
+.header-c-sub {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  /* border: 2px solid green; */
+  width: auto;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+
+}
+
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  /* border: 2px solid red; */
+  margin-left: auto;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+}
+
+.inputs {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
 }
