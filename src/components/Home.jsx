@@ -1,5 +1,5 @@
-import { Button, AutoComplete, Input } from "antd";
-import React, { useState } from "react";
+import { Button, AutoComplete, Input, Alert } from "antd";
+import React, { Suspense, useState } from "react";
 import Header from "./Header";
 import Counter from "./Counter";
 import Players from "./Players";
@@ -39,10 +39,10 @@ export default function Home() {
         }
     ])
 
-    let [addPlayer, setAddPlayer] = useState({})
 
 
-
+    let [errors, setErrors] = useState();
+    let [success, setSuccess] = useState();
 
     let changeScore = (playerId, points) => {
 
@@ -64,11 +64,9 @@ export default function Home() {
     }
 
 
-    let newPlayer = (element) => {
-        element.preventDefault();
+    let newPlayer = (value) => {
 
-        // console.log(element)
-        let obj = element.target;
+
 
         let ids = players.map(e => e.id)
 
@@ -78,26 +76,47 @@ export default function Home() {
             id = Math.floor(Math.random() * 50 + 1);
         }
 
+
         let newP = {
             id: id,
             score: 0,
-            name: obj.value
-
+            name: value
         }
-        
-        setAddPlayer(newP)
-        
-        // console.log(addPlayer)
+
+
+        // state e boolean true/false , daca lungimea arrayului determinat de filtrul nume in arrayul players este mai mare decat 0
+        let state = players.filter(e => e.name.toLowerCase() === newP.name.toLowerCase()).length > 0;
+        // console.log(state)
+
+        // daca value e diferit de nimic si !state este false , adica lungimea e 0 
+
+        if (value !== "" && !state) {
+
+            // array nou oglinda players
+            let arr = [...players];
+            // impins player nou 
+            arr.push(newP);
+
+            // salvam state players 
+            setPlayers(arr);
+            // console.log(success)
+            //state succes e true 
+            setSuccess(true);
+
+        } else {
+            console.log("aici")
+
+            // state erori este true
+            setErrors(true);
+        }
     }
 
 
-    let addNewPlayer = () => {
 
-        let arr = [...players];
-        arr.push(addPlayer);
-        setPlayers(arr)
-        
-    }
+
+    // console.log(addPlayer)
+
+
 
 
     let deletePlayer = (id) => {
@@ -114,10 +133,50 @@ export default function Home() {
 
         // header , players  has data props, which is players, but the props is data, so when imported in the component, will not pass the props value, but the props name 
 
-        <div className="w-full max-w-2xl flex flex-col gap-2 rounded-md shadow-[0_30px_150px_rgba(8,_112,_184,_0.9)]  bg-slate-100">
+        <div className="w-full max-w-2xl flex flex-col gap-2 rounded-md shadow-[0_30px_150px_rgba(8,_112,_184,_0.9)]  bg-slate-100 relative">
             <Header data={players} />
             <Players data={players} handleScore={changeScore} deletePlayer={deletePlayer} />
-            <InputSection playerInput={newPlayer} addNewPlayer={addNewPlayer} />
+            <InputSection addNewPlayer={newPlayer} errors={errors} />
+            {
+                success ?
+                    <Alert
+                        className="absolute bottom-[-100px]"
+                        message="Success"
+                        description={success}
+                        type="success"
+                        showIcon
+                        closable
+                    />
+                    :
+                    <Alert className="absolute bottom-[-100px]"
+                        message="No given name"
+                        description={errors}
+                        type="error"
+                        showIcon
+                        closable
+                    />
+            }
         </div>
     )
 }
+
+
+
+
+// success?
+// <Alert
+//     className="absolute bottom-[-100px]"
+//     message="Success"
+//     description={success}
+//     type="success"
+//     showIcon
+//     closable
+// />
+// : 
+// <Alert className="absolute bottom-[-100px]"
+//         message="No given name"
+//         description={errors}
+//         type="error"
+//         showIcon
+//         closable
+// />
